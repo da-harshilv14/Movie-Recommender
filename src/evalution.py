@@ -6,7 +6,7 @@ import random
 RELEVANCE_THRESHOLD = 4.0
 K = 10
 random.seed(42)
-moviesDF = pd.read_csv("./data/processed/movies_clean.csv")
+moviesDF = pd.read_csv("../data/processed/movies_clean.csv")
 
 
 def get_liked_movies(rating_df: pd.DataFrame) -> dict:
@@ -50,10 +50,11 @@ def dummy_recommend_fn(movie_id, k=K) -> list[int]:
     movieList = random.choices(movies_with_IDs, k=k)
     return movieList
 
+from baseline import baseline_recommend_fn
 
 if __name__ == "__main__":
-    ratings = pd.read_csv("data/ratings.csv")  # adjust path
+    ratings = pd.read_csv("../data/ratings.csv")  # adjust path
     liked = get_liked_movies(ratings)
     pairs = make_eval_pairs(liked)
-    results = evaluate(dummy_recommend_fn, pairs)
+    results = evaluate(baseline_recommend_fn, pairs)
     print(results)
