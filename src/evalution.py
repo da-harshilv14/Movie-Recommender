@@ -51,10 +51,12 @@ def dummy_recommend_fn(movie_id, k=K) -> list[int]:
     return movieList
 
 from baseline import baseline_recommend_fn
+from item import item_cf_recommend_fn
 
 if __name__ == "__main__":
     ratings = pd.read_csv("../data/ratings.csv")  # adjust path
     liked = get_liked_movies(ratings)
     pairs = make_eval_pairs(liked)
-    results = evaluate(baseline_recommend_fn, pairs)
+    # results = evaluate(baseline_recommend_fn, pairs)
+    results = evaluate(item_cf_recommend_fn, pairs, 10)
     print(results)
