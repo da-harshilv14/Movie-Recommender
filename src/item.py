@@ -31,6 +31,13 @@ def compute_item_similarity(matrix: pd.DataFrame) -> np.ndarray:
     similarity_matrix = M_normalized @ M_normalized.T
     return similarity_matrix
 
+def compute_item_similaritty(np_array: np.ndarray) -> np.ndarray:
+    norms = np.linalg.norm(np_array, axis=1)
+    safe_norms = np.where(norms == 0, 1, norms)
+    M_normalized = np_array / safe_norms[:, np.newaxis]
+    similarity_matrix = M_normalized @ M_normalized.T
+    return similarity_matrix
+
 _ratings = pd.read_csv(RATINGS_PATH)
 _matrix = build_user_item_matrix(_ratings)
 _similarity_matrix = compute_item_similarity(_matrix)
